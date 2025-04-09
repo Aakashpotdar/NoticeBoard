@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -16,11 +17,17 @@ namespace NoticeBoardApp
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        public static IWebHostBuilder CreateHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging(logBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    logBuilder.ClearProviders(); // removes all providers from LoggerFactory
+                    logBuilder.AddConsole();
+                    logBuilder.AddTraceSource("Information, ActivityTracing");
+                })
+                .UseStartup<Startup>();
+        //.ConfigureWebHostDefaults(webBuilder =>
+        //{
+        //});
     }
 }

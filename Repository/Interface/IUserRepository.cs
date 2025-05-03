@@ -18,7 +18,7 @@ namespace Repository.Interface
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public Task login(string email,string password);
+        public Task<Boolean> login(UserModel userModel);
 
         /// <summary>
         /// interface for register model   
@@ -26,5 +26,12 @@ namespace Repository.Interface
         /// <param name="userModel"></param>
         /// <returns></returns>
         public Task register(UserModel userModel);
+
+        /// <summary>
+        /// genarte token method 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Task<string> GenrateToken(string email);
     }
 }

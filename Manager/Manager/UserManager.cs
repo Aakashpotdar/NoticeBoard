@@ -13,7 +13,7 @@ namespace Manager.Manager
     /// <summary>
     /// User manager class
     /// </summary>
-    public class UserManager:IUserManager
+    public class UserManager : IUserManager
     {
         /// <summary>
         /// user manager instance
@@ -33,9 +33,9 @@ namespace Manager.Manager
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        public async Task login(string email, string password)
+        public async Task<Boolean> login(UserModel userModel)
         {
-            
+            return await userRepo.login(userModel);
         }
 
         /// <summary>
@@ -56,6 +56,15 @@ namespace Manager.Manager
             return true;
         }
 
+        /// <summary>
+        /// genrates token
+        /// </summary>
+        /// <param name="tokenRequest"></param>
+        /// <returns></returns>
+        public Task<string> GenrateToken(string email)
+        {
+            return userRepo.GenrateToken(email);
+        }
 
     }
 }

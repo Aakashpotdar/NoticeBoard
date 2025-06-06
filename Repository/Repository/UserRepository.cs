@@ -83,7 +83,14 @@ namespace Repository.Repository
         /// <returns></returns>
         public async Task register(UserModel userModel)
         {
-            this.userInfoData.InsertOneAsync(userModel);
+            try 
+            {
+                await this.userInfoData.InsertOneAsync(userModel);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(message: ex.Message);
+            }
         }
 
         /// <summary>

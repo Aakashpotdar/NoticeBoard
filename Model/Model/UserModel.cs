@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Model.Model
 
         public string password { get; set; }
 
+        [BsonId]
         public string userId { get; set; }
     }
 }

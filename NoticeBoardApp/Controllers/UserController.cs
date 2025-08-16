@@ -24,23 +24,30 @@ namespace NoticeBoardApp.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task Login([FromBody] UserModel userModel)
+        public async Task<IActionResult> Login([FromBody] UserModel userModel)
         {
             try
             {
                 this.logger.LogInformation("the user {email} is trying to login!!",userModel.email);
                 if (!string.IsNullOrEmpty(userModel.email) && !string.IsNullOrEmpty(userModel.password))
                 {
-                    await userManager.login(userModel.email, userModel.password);
+                    bool result = await userManager.login(userModel);
+                    if(result == true)
+                    {
+                        string token = await this.userManager.GenrateToken(userModel.email);
+                        return this.Ok(new { Status = true, Massage = "login successfully", Data = result, Token = token });
+                    }
+                    return this.BadRequest(new { Status = true, Massage = "Unsuccessfully login please provide correct email and password" });                  
                 }
                 else
                 {
-                    this.BadRequest(new { Status = true, Massage = "Give inputs Email and Password" });
+                   return this.BadRequest(new { Status = true, Massage = "Give inputs Email and Password" });
                 }
+
             }
             catch (Exception ex)
             {
-                this.BadRequest(new { Status = true, Massage = "Unsuccessfully login" + ex.Message });
+                return this.BadRequest(new { Status = true, Massage = "Unsuccessfully login" + ex.Message });
             }
         }
 

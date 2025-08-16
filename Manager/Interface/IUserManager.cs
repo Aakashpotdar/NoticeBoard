@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.Model;
+using System;
 using System.Threading.Tasks;
 
 namespace Manager.Interface
@@ -9,10 +10,9 @@ namespace Manager.Interface
         /// <summary>
         /// Interface for login method 
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <param name="userModel"></param>
         /// <returns></returns>
-        public Task login(string email, string password);
+        public Task<Boolean> login(UserModel userModel);
 
         /// <summary>
         /// Interface for the register the user
@@ -20,5 +20,7 @@ namespace Manager.Interface
         /// <param name="userModel"></param>
         /// <returns></returns>
         public Task<bool> register(UserModel userModel);
+
+        public Task<string> GenrateToken(string email);
     }
 }

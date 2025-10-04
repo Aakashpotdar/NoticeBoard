@@ -4,9 +4,7 @@ using MongoDB.Driver;
 using NoticeBoardApp.Models;
 using Repository.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Model.Exceptions;
 using System.Threading.Tasks;
 
 namespace Repository.Repository
@@ -37,9 +35,13 @@ namespace Repository.Repository
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch(ServerException e)
             {
-                throw new Exception(message: ex.Message);
+                throw new ServerException(404,"SERVER_NOT_FOUND");
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message);
             }
         }
 

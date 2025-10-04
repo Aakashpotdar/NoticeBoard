@@ -1,10 +1,6 @@
 ﻿using Manager.Interface;
 using NoticeBoardApp.Models;
 using Repository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Manager.Manager
@@ -15,7 +11,7 @@ namespace Manager.Manager
 
         public NoteManager(INoteRepository noteRepo)
         {
-            this.noteRepo = noteRepo;
+            this.noteRepo = noteRepo;           
         }
 
         public async Task<bool> addNote(NoteModel note)

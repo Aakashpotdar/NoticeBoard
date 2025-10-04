@@ -1,6 +1,8 @@
-﻿using Manager.Interface;
+﻿using Model.Exceptions;
+using Manager.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Model.Model;
 using NoticeBoardApp.Models;
 using System;
 using System.Collections.Generic;
@@ -26,12 +28,22 @@ namespace NoticeBoardApp.Controllers
         [Route("addNote")]
         public async Task<IActionResult> addNote([FromBody] NoteModel note)
         {
-            if(note != null)
+            try
             {
-                var output = await noteManager.addNote(note);
-                return this.Ok(new { Status = true, Massage = "note successfully added" });
+                if (note != null)
+                {
+                    var output = await noteManager.addNote(note);
+                    return this.Ok(new { Status = true, Massage = "note successfully added" });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = true, Massage = "Give invalid inputs" });
+                }
             }
-            return this.BadRequest(new { Status = true, Massage = "Give invalid inputs" });
+            catch (BadRequestException ex)
+            {
+                throw new BadRequestException(400, "INVALID_INPUT");
+            }
         }
 
         [HttpDelete]

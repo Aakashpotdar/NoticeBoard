@@ -61,6 +61,10 @@ namespace Repository.Repository
                 }
                 return false;
             }
+            catch (ServerException e)
+            {
+                throw new ServerException(404, "SERVER_NOT_FOUND");
+            }
             catch (Exception ex)
             {
                 throw new Exception(message: ex.Message);
@@ -81,6 +85,10 @@ namespace Repository.Repository
                     return false;
                 }
                 return false;
+            }
+            catch (ServerException e)
+            {
+                throw new ServerException(404, "SERVER_NOT_FOUND");
             }
             catch (Exception ex)
             {
